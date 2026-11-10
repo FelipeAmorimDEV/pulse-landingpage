@@ -136,14 +136,14 @@ export function Cashless() {
         <div className="flex justify-center rounded-box bg-accent px-4 py-10 text-accent-content">
           <div className="w-full max-w-[280px] rounded-[2rem] bg-neutral p-2">
             <div key={active} aria-live="polite" className="pulse-swap overflow-hidden rounded-[1.45rem]">
-                <Image
-                  src={STEPS[active].src}
-                  alt={STEPS[active].alt}
-                  width={STEPS[active].width}
-                  height={STEPS[active].height}
-                  unoptimized
-                  className="h-auto w-full"
-                />
+              <Image
+                src={STEPS[active].src}
+                alt={STEPS[active].alt}
+                width={STEPS[active].width}
+                height={STEPS[active].height}
+                unoptimized
+                className="h-auto w-full"
+              />
             </div>
           </div>
         </div>
