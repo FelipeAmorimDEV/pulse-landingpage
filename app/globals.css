@@ -1,26 +1,207 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@plugin "daisyui" {
+  themes: false;
+}
+@plugin "daisyui/theme" {
+  name: "pulse";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+  --color-base-100: #f2f1eb;
+  --color-base-200: #e6e4db;
+  --color-base-300: #d4d8d2;
+  --color-base-content: #013d2c;
+  --color-primary: #b8f500;
+  --color-primary-content: #013d2c;
+  --color-secondary: #075d45;
+  --color-secondary-content: #f5fff8;
+  --color-accent: #7dd1ba;
+  --color-accent-content: #013d2c;
+  --color-neutral: #013d2c;
+  --color-neutral-content: #f2f1eb;
+  --color-info: #37947a;
+  --color-info-content: #f5fff8;
+  --color-success: #075d45;
+  --color-success-content: #f5fff8;
+  --color-warning: #f4e451;
+  --color-warning-content: #013d2c;
+  --color-error: #b42318;
+  --color-error-content: #fff8f6;
+  --radius-selector: 1rem;
+  --radius-field: 0.8rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-atkinson), ui-sans-serif, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+.steps.steps-vertical {
+  overflow: visible;
+}
+
+.steps .step {
+  --step-bg: color-mix(in oklab, var(--color-base-content) 55%, var(--color-base-100));
+}
+
+.nav-menu a[aria-current="true"] {
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: inset 0 -2px 0 var(--color-primary);
+}
+
+@keyframes pulse-settle {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pulse-swap {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pulse-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.pulse-settle {
+  animation: pulse-settle 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.pulse-settle-late {
+  animation-delay: 0.28s;
+}
+
+.pulse-swap {
+  animation: pulse-swap 0.28s ease both;
+}
+
+.marquee-track {
+  animation: pulse-marquee 28s linear infinite;
+}
+
+.rhythm-track,
+.rhythm-line {
+  position: absolute;
+  top: 9px;
+  right: 0;
+  left: 0;
+  height: 1px;
+  transform-origin: left center;
+}
+
+.rhythm-track {
+  background: color-mix(in oklab, var(--color-secondary) 25%, transparent);
+}
+
+.rhythm-line {
+  background: var(--color-secondary);
+  transform: scaleX(0);
+}
+
+.rhythm-dot {
+  position: absolute;
+  top: 5px;
+  left: -5px;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 9999px;
+  background: color-mix(in oklab, var(--color-base-content) 35%, transparent);
+}
+
+.rhythm-moment[data-lit="true"] .rhythm-dot {
+  background: var(--color-secondary);
+}
+
+.rhythm-moment[data-lit="false"] .rhythm-when,
+.rhythm-moment[data-lit="false"] .rhythm-title {
+  color: color-mix(in oklab, var(--color-base-content) 45%, transparent);
+}
+
+@media (min-width: 1024px) {
+  .rhythm-dot {
+    left: 0;
+  }
+
+  .rhythm-track,
+  .rhythm-line {
+    display: block;
+  }
+}
+
+@media (max-width: 1023px) {
+  .rhythm-track,
+  .rhythm-line {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .pulse-settle,
+  .pulse-swap,
+  .marquee-track {
+    animation: none;
+  }
+
+  .rhythm-line {
+    transform: scaleX(1);
+  }
+
+  .rhythm-moment[data-lit="false"] .rhythm-when {
+    color: var(--color-secondary);
+  }
+
+  .rhythm-moment[data-lit="false"] .rhythm-title {
+    color: var(--color-base-content);
+  }
+
+  .rhythm-moment[data-lit="false"] .rhythm-dot {
+    background: var(--color-secondary);
+  }
+
+  .marquee-track,
+  .marquee-track ul {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    transform: none;
+  }
+
+  .marquee-duplicate {
+    display: none;
+  }
 }
